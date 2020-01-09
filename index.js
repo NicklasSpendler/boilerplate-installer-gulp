@@ -8,6 +8,13 @@ let content = fs.readdirSync(packageFolder)
 
 let targetPath = `${__dirname}`
 
+// Uses regex to substring the extended path only
+function getExtendedPath(path){
+    let extraPathReg = path.match(/\/pkg\/.*/);
+    return extraPathReg[0].substring(5,extraPathReg[0].length)
+}
+
+
 initRepackFolder()
 function initRepackFolder(){
     if(fs.existsSync(`${__dirname}/repack`)){
@@ -35,7 +42,7 @@ function copyFolder(path, targetFolder){
     tempDir.forEach(file => {
         if(fs.lstatSync(path).isDirectory()){
             let extraPathReg = path.match(/\/pkg\/.*/);
-            let extraPath = extraPathReg[0].substring(5,extraPathReg[0].length)
+            let extraPath = getExtendedPath(path)
             // console.log('dir', path)
             // console.log('', extraPath)
             // console.log(`${targetFolder}/${extraPath}`)
@@ -49,7 +56,7 @@ function copyFolder(path, targetFolder){
         }
         if(fs.lstatSync(`${path}/${file}`).isDirectory()){
             let extraPathReg = path.match(/\/pkg\/.*/);
-            let extraPath = extraPathReg[0].substring(5,extraPathReg[0].length)
+            let extraPath = getExtendedPath(path)
             // console.log('', path)
             // console.log('', extraPath)
             // console.log(`/${targetFolder}/${extraPath}/${file}`)
@@ -66,8 +73,7 @@ function copyFolder(path, targetFolder){
         }else{
             // console.log('', file)
             // console.log('', path)
-            let extraPathReg = path.match(/\/pkg\/.*/);
-            let extraPath = extraPathReg[0].substring(5,extraPathReg[0].length)
+            let extraPath = getExtendedPath(path)
             // console.log('', extraPath)
             // console.log('', `${__dirname}/${targetFolder}/${extraPath}/${file}`)
             // console.log('', `${path}/${file}`)
