@@ -90,6 +90,8 @@ exec("npm i -D @babel/core @babel/preset-env gulp gulp-babel gulp-clean-css gulp
         process.exit(1);
     }
 
+    console.log('installing NPM modules. Please wait.', )
+
     stdout.normalize("data", ()=>{
         console.log('', dat.toString())
     })
